@@ -15,15 +15,16 @@ Step 1
 		○ I used STRING to swap the order of the Record Key from  MMDDYYYY to YYYYMMDD so that it would sort properly.
 		○ Each of the 5 input files populate a portion of the records so…
 		○ When processing the first input file (claims by age) I used WRITE to populate the VSAM file because the written records are new
-		○ When processing subsequent input files I used REWRITE because by then the records exist and need to be updated... not sure if there is a better/easier way to do this.
+		○ When processing subsequent input files I used REWRITE because by then the records exist and need to be updated... this was tedious, not sure if there is a better/easier way to do all of this.
 
 Step 2
 	• Created simple dataset "UNEMPIN" to contain the user input selections of a Record Key and/or an All Records indicator (in the absence of an online app)
 	• Created the main program (UNEMPMN) which reads UNEMPIN and passes these two user input data items to the first subroutine (UNEMPSB) which returns either a table (if All Records indicator is Y), or a single record (if All Records indicator is N and a valid record key is provided).
 	• The first subroutine (UNEMPSB) calls one of two other subroutines (RTALLREC, or RTONEREC) depending on the AllRecords indicator.  
-	• This is because if AllRecords is selected, I need to access the VSAM file sequentially in order to read through and retrieve all of the records (RTALLREC), but I need to access the VSAM file randomly in order to retrieve a single record based on the record key provided by the user (RTONEREC)… not sure if there is a better/easier way to do this.
+	• This is because if AllRecords is selected, I need to access the VSAM file sequentially in order to read through and retrieve all of the records (RTALLREC), but I need to access the VSAM file randomly in order to retrieve a single record based on the record key provided by the user (RTONEREC)… also tedious, not sure if there is a better/easier way to do all of this.
 
 Step 3
 	• Main program (UNEMPMN) produces the output report in CSV format with headers and it is displayed through PRTLINE as well as printed to a dataset (UNEMPOUT) which can be brought into Excel for better formatting
-	• Some basic error handling is included.
+	• Some very basic error handling is included.
 
+Note:  I created UNMPEXEC.jcl to execute the final program without having to compile it (to play with the input data)… UNMPSBMN.jcl compiles and runs the main program and subroutines.
